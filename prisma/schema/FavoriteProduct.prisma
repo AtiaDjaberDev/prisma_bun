@@ -1,0 +1,16 @@
+model FavoriteProduct {
+  id          Int       @id @default(autoincrement())
+  product_id  Int
+  favorite_id Int
+  depot_id    Int?      
+  quantity    Float     @default(1)
+  user_id          Int?
+ 
+  product     Product   @relation(fields: [product_id], references: [id])
+  favorite    Favorite  @relation(fields: [favorite_id], references: [id], name: "FavoriteToFavoriteProduct")
+  depo       Depo?    @relation(fields: [depot_id], references: [id])
+  user       User?      @relation(fields: [user_id], references: [id])
+
+  @@unique([product_id, favorite_id]) 
+  @@map("favorite_product") 
+}

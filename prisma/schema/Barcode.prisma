@@ -1,0 +1,16 @@
+model Barcode {
+id             Int         @id                @default(autoincrement())
+name           String      @db.VarChar(500) 
+product_id     Int
+quantity       Int         @default(1)
+
+deleted_at   DateTime?  
+created_at   DateTime?  @default(now())
+updated_at   DateTime?  @updatedAt
+user_id      Int?
+
+product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+user       User?      @relation(fields: [user_id], references: [id])
+
+@@map("Barcodes") 
+}

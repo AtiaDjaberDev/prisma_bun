@@ -1,0 +1,27 @@
+model Purchase {
+  id                   Int       @id @default(autoincrement())
+  product_id            Int       
+  fournisseurFacture_id Int       
+  fournisseur_id       Int?      
+  name                 String
+  barcode              String
+  quantity             Float     @default(0)
+  price                Decimal   @default(0.00)
+  purchasePrice        Decimal   @default(0.00) @map("purchase_price")
+  total                Decimal   @default(0.00)
+  depot_id             Int?      
+  user_id              Int?
+  deletedAt            DateTime? @map("deleted_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime?  @updatedAt @map("updated_at")
+
+  // Relation Fields
+  product              Product              @relation(fields: [product_id], references: [id])
+  fournisseurFacture   FournisseurFacture   @relation(fields: [fournisseurFacture_id], references: [id])
+  fournisseur          Fournisseur?         @relation(fields: [fournisseur_id], references: [id])
+  depoy                Depo?                @relation(fields: [depot_id], references: [id])
+  user                 User?                @relation(fields: [user_id], references: [id])
+ 
+ 
+  @@map("purchases") 
+}

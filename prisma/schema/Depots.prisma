@@ -1,0 +1,16 @@
+model Depo{
+  id              Int       @id               @default(autoincrement())
+  name            String    @db.VarChar(255) 
+  Description     String?   @db.VarChar(255) 
+  deleted_at      DateTime?  
+  created_at      DateTime?  @default(now())
+  updated_at      DateTime?  @updatedAt
+  user_id         Int?
+  
+  Sales           Sale[]
+  products        FavoriteProduct[]
+  user            User?              @relation(fields: [user_id], references: [id])
+  purchase        Purchase[]
+
+  @@map("depots") 
+}

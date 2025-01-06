@@ -1,0 +1,38 @@
+enum Role {
+  admin
+  user
+}
+
+// نموذج User
+model User {
+  id       Int       @id               @default(autoincrement())
+  name     String    @db.VarChar(255)
+  username String    @db.VarChar(255)  @unique
+  password String
+  phone    String?   @db.VarChar(255)
+  role     Role      @default(user) 
+  user_id  Int?
+  image    String?    @db.VarChar(255)
+
+  deleted_at   DateTime?  
+  created_at   DateTime?  @default(now())
+  updated_at   DateTime?  @updatedAt
+  
+
+  Factures Facture[]
+  Products Product[]
+  clients Client[]
+  depo     Depo[]
+  Categories Category[]
+  Barcodes Barcode[]
+  Favorite Favorite[]
+  FavoriteProduct FavoriteProduct[]  
+  FournisseurFacture FournisseurFacture[]
+  purchase        Purchase[]
+  fournisseur Fournisseur[]
+
+  users User[] @relation("UserToUsers")  
+  user  User?  @relation("UserToUsers", fields: [user_id], references: [id])  
+
+  @@map("users") 
+}

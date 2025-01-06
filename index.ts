@@ -12,14 +12,13 @@ const server = Bun.serve({
   hostname: host,
   idleTimeout: 120,
   async fetch(request) {
-    const output1 = await $`ls`.text();
-    console.log(output1);
-    const output = await $`npx prisma migrate dev`;
-    console.log(output);
-    const products = await prisma.clients.findMany( );
+   
+    const output = await $`npx prisma migrate dev --skip-generate`;
+    console.log(output.exitCode);
+    const products = await prisma.category.findMany();
 
-// count the number of users
-console.log(`There are ${products.length} users in the database.`);
+    // count the number of users
+    console.log(`There are ${products.length} users in the database.`);
     return Response.json(products);
   },
 });

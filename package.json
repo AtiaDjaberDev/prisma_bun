@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "joi": "^17.13.3",
-    "prisma": "^5.22.0",
-    "@prisma/client": "^5.22.0"
+    "@prisma/client": "^6.0.1",
+    "prisma": "^6.0.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

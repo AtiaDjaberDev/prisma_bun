@@ -1,0 +1,18 @@
+model Client {
+  id         Int        @id               @default(autoincrement())
+  name       String     @default("")      @db.VarChar(255)  
+  phone      String?    @db.VarChar(255)  
+  montant    Decimal    @default(0.00)    @db.Decimal(10, 2)
+  ancien     Decimal     @default(0.00)    @db.Decimal(10, 2)
+
+  deleted_at   DateTime?  
+  created_at   DateTime?  @default(now())
+  updated_at   DateTime?  @updatedAt
+  user_id      Int?
+
+  Factures Facture[]
+  Sales    Sale[]
+  user       User?      @relation(fields: [user_id], references: [id])
+
+  @@map("clients") 
+}

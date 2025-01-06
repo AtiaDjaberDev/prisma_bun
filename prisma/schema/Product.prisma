@@ -1,0 +1,25 @@
+model Product {
+  id            Int      @id               @default(autoincrement())
+  name          String   @db.VarChar(255) 
+  price        Decimal   @default(0.00)    @db.Decimal(10, 2)
+  sell_price   Decimal   @default(0.00)    @db.Decimal(10, 2)
+  quantity     Float     @default(0)  
+  category_id  Int?
+
+  deleted_at   DateTime?  
+  created_at   DateTime?  @default(now())
+  updated_at   DateTime?  @updatedAt
+  user_id      Int?
+  image        String?    @db.VarChar(255)
+
+  
+  favoriteProducts  FavoriteProduct[]
+  Sales             Sale[]
+  barcode           Barcode[]
+  purchase          Purchase[]
+  category          Category?          @relation(fields: [category_id], references: [id]) 
+  user              User?              @relation(fields: [user_id], references: [id])
+
+  
+  @@map("products") 
+}
