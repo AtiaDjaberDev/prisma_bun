@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { $ } from "bun";
+// import process from "process";
 
 
 import "dotenv/config";
@@ -32,13 +33,20 @@ const server = Bun.serve({
   hostname: "localhost",
   idleTimeout: 120,
   async fetch(request) {
+    const url = new URL(request.url);
+    console.log(url.pathname);
 
-    // const output = await $`cd .. && npx drizzle-kit push`;
-    // console.log(output.exitCode);
- 
-    const customers = await db.select().from(customersTable);
-    console.log("All Customers:", customers);
-    return Response.json(customers);
+    if (url.pathname === "/test") {
+      const customers = await db.select().from(customersTable);
+      console.log("All Customers:", customers);
+      return Response.json(customers);
+
+    } else {
+      const output = await $`npx drizzle-kit push`;
+      console.log(output.exitCode);
+      return Response.json(output);
+    }
+
   },
 });
 
