@@ -2,27 +2,21 @@ import { PrismaClient } from "@prisma/client";
 import { $ } from "bun";
 // import process from "process";
 
-
-import "dotenv/config";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import "dotenv/config";
-import * as dotenv from "dotenv";
 import { customersTable } from "./src/db/schema";
-dotenv.config();
 
 const prisma = new PrismaClient();
 
 const poolConnection = mysql.createPool({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "sales",
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "sales",
 });
 
 // إنشاء كائن Drizzle
 const db = drizzle(poolConnection);
-
 
 // create a new user
 
@@ -40,13 +34,11 @@ const server = Bun.serve({
       const customers = await db.select().from(customersTable);
       console.log("All Customers:", customers);
       return Response.json(customers);
-
     } else {
       const output = await $`npx drizzle-kit push`;
       console.log(output.exitCode);
-      return Response.json(output);
+      return Response.json(output.text());
     }
-
   },
 });
 

@@ -8,5 +8,7 @@ export const customersTable = mysqlTable("customers", {
   test: int(),
   hello: int(),
   hello2: int(),
+  hello3: int(),
+  hell: int(),
   ancien: int().notNull(),
 });
