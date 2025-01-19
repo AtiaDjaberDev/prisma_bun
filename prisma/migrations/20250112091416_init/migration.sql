@@ -20,6 +20,11 @@ CREATE TABLE `categories` (
     `created_at` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NULL,
     `user_id` INTEGER NULL,
+    `description` TEXT NULL,
+    `mohammed` TEXT NULL,
+    `mohammed2` TEXT NULL,
+    `bachir` TEXT NULL,
+    `atia` TEXT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

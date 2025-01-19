@@ -1,0 +1,1 @@
+ALTER TABLE `expenses` ADD `car` varchar(255) NOT NULL;
