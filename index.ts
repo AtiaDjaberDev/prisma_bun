@@ -21,9 +21,12 @@ console.log(config);
 
 const db = drizzle(poolConnection);
 
+ 
+
+ 
 const server = Bun.serve({
   port: 3000,
-  hostname: host,
+  hostname: "localhost",
   idleTimeout: 120,
   async fetch(request) {
     const url = new URL(request.url);

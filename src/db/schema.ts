@@ -1,5 +1,8 @@
 import { int, mysqlTable, serial, varchar } from "drizzle-orm/mysql-core";
+<<<<<<< HEAD
 //
+=======
+>>>>>>> d7d76dbef99f53985240c643fab7abbb1ff36cb4
 export const customersTable = mysqlTable("customers", {
   id: serial().primaryKey(),
   name: varchar({ length: 255 }).notNull(),
@@ -9,6 +12,7 @@ export const customersTable = mysqlTable("customers", {
   test: int(),
   hello: int(),
   hello2: int(),
+<<<<<<< HEAD
   hello3: int(),
   hell: int(),
   ancien: int().notNull(),
@@ -36,3 +40,7 @@ export const expenseTable = mysqlTable("expenses", {
   car1: varchar({ length: 255 }).notNull(), 
   ca2: varchar({ length: 255 }).notNull(), 
 });
+=======
+  ancien: int().notNull(),
+});
+>>>>>>> d7d76dbef99f53985240c643fab7abbb1ff36cb4
