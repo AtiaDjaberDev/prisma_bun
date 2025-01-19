@@ -1,0 +1,1 @@
+ALTER TABLE `factures` ADD `zaki` varchar(255);

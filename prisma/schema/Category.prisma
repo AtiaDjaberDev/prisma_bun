@@ -7,13 +7,16 @@ model Category {
     updated_at DateTime? @updatedAt
     user_id    Int?
 
-    description String?   @db.Text
-    mohammed    String?   @db.Text
-    mohammed2   String?   @db.Text
-    bachir      String?   @db.Text
-    atia        String?   @db.Text
-    product     Product[]
-    user        User?     @relation(fields: [user_id], references: [id])
+    description       String?   @db.Text
+    description2      String?   @db.Text
+    descriptionsqdqsd String?   @db.Text
+    hello             String?   @db.Text
+    mohammed          String?   @db.Text
+    mohammed2         String?   @db.Text
+    bachir            String?   @db.Text
+    atia              String?   @db.Text
+    product           Product[]
+    user              User?     @relation(fields: [user_id], references: [id])
 
     @@map("categories")
 }
