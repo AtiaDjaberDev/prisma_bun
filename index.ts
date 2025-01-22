@@ -1,14 +1,11 @@
 // import { PrismaClient } from "@prisma/client";
-import { $ } from "bun";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle, type MySqlRawQueryResult } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-// import process from "process";
 import config from "./drizzle.config.ts";
 import { customersTable } from "./src/db/schema.ts";
 
-// const prisma = new PrismaClient();
-
 const host = process.argv[2] || import.meta.env.HOST;
+let migrationsResult: string[] = [];
 
 const poolConnection = mysql.createPool({
   host: "localhost",
@@ -21,13 +18,10 @@ console.log(config);
 
 const db = drizzle(poolConnection);
 
- 
-
- 
 const server = Bun.serve({
   port: 3000,
   hostname: "localhost",
-  idleTimeout: 120,
+  // idleTimeout:  ,
   async fetch(request) {
     const url = new URL(request.url);
     console.log(url.pathname);
@@ -43,10 +37,9 @@ const server = Bun.serve({
     } else {
       // const output = await $`npx prisma migrate dev --skip-generate`;
       // const output = await $`npx drizzle-kit push`;
-
       // console.log(output.exitCode);
       // return Response.json(output.text());
-
+      migrationsResult = [];
       [
         "ALTER TABLE `factures` ADD `runtime` varchar(255);",
         "CREATE TABLE `expenses` ( `id` serial AUTO_INCREMENT NOT NULL, `name` varchar(255) NOT NULL, CONSTRAINT `expenses_id` PRIMARY KEY(`id`) );",
@@ -58,18 +51,30 @@ const server = Bun.serve({
         await runMigration(query);
       });
 
-      return Response.json("Run migrations successfuly!!!");
+      return Response.json(migrationsResult);
     }
   },
 });
 
 async function runMigration(query: string) {
   try {
-    console.log(query);
     await db.execute(query);
-  } catch (error) {
-    console.log(query);
-    console.error(error);
+    migrationsResult.push("Query excuted " + query);
+  } catch (error: any) {
+    console.log(migrationsResult.length);
+
+    if (error.errno == 1060) {
+      console.log("Already applied => " + query);
+      migrationsResult.push("Already applied => " + query);
+    } else if (error.errno == 1050) {
+      console.log("Table Already exists => " + query);
+      migrationsResult.push("Already applied => " + query);
+    } else {
+      migrationsResult.push("Error => " + error.sqlMessage);
+      console.error(error);
+    }
   }
 }
+
+//
 console.log(`Listening on ${server.url}`);
